@@ -4,9 +4,8 @@ from remote import Component
 from protocols import LoRaWAN
 
 
-class StartIoT(Component):
-    def __init__(self, auth: Tuple[str, str, str], name='StartIoT'):
-        super().__init__(name)
+class StartIoT:
+    def __init__(self, auth: Tuple[str, str, str]):
         self.LoRaWAN: LoRaWAN = LoRaWAN()
         self.dev_eui: bytes = None
         self.app_eui: bytes = None

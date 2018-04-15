@@ -1,6 +1,6 @@
-from protocols import base
+from protocols import Protocol
 
 
-class HTTP(base):
+class HTTP(Protocol):
     def __init__(self):
-        pass
+        super().__init__()

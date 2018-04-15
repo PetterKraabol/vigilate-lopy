@@ -1,14 +1,28 @@
 import json
-from remote import StartIoT
+import time
+import pycom
+from remote import RaspberryPi  # , StartIoT
 
 
-def main(config: dict):
-    server: StartIoT = StartIoT(
-        auth=(config['start_iot']['dev_eui'], config['start_iot']['app_eui'], config['start_iot']['app_key']))
+def main():
+    config = json.load(open('config.json'))
+    pi: RaspberryPi = RaspberryPi()
+    # cloud: StartIoT = StartIoT((config['dev_eui'], config['app_eui'], config['app_key']))
 
-    print(server)
+    pycom.rgbled(0x111111)
+
+    while True:
+
+        received: str = pi.receive()
+        pycom.rgbled(0x00ff00)
+        if received == 'stop':
+            break
+        time.sleep(0.5)
+
+    pycom.rgbled(0x150000)
 
 
 if __name__ == '__main__':
-    config_dictionary: dict = json.load(open('config.json'))
-    main(config_dictionary)
+    pycom.heartbeat(False)
+    pycom.rgbled(0xff0000)
+    main()
